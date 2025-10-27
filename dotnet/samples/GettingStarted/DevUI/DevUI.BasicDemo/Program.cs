@@ -2,14 +2,11 @@
 
 // This sample demonstrates basic usage of the DevUI in an ASP.NET Core application with AI agents.
 
-using Azure.AI.OpenAI;
-using Azure.Identity;
 using Microsoft.Agents.AI.DevUI;
 using Microsoft.Agents.AI.Hosting;
 using Microsoft.Agents.AI.Hosting.OpenAI.Conversations;
-using Microsoft.Extensions.AI;
 
-namespace DevUI_Step01_BasicUsage;
+namespace DevUI.BasicDemo;
 
 /// <summary>
 /// Sample demonstrating basic usage of the DevUI in an ASP.NET Core application.
@@ -39,15 +36,11 @@ internal static class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.AddServiceDefaults();
+
         // Set up the Azure OpenAI client
-        var endpoint = builder.Configuration["AZURE_OPENAI_ENDPOINT"] ?? throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT is not set.");
-        var deploymentName = builder.Configuration["AZURE_OPENAI_DEPLOYMENT_NAME"] ?? "gpt-4o-mini";
-
-        var chatClient = new AzureOpenAIClient(new Uri(endpoint), new AzureCliCredential())
-            .GetChatClient(deploymentName)
-            .AsIChatClient();
-
-        builder.Services.AddChatClient(chatClient);
+        builder.AddAzureChatCompletionsClient(connectionName: "ai-foundry")
+            .AddChatClient("gpt-5-mini");
 
         // Register sample agents
         builder.AddAIAgent("assistant", "You are a helpful assistant. Answer questions concisely and accurately.");

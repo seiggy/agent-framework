@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DevUI.AppHost/DevUI.AppHost.csproj" />
+  <Project Path="DevUI.ServiceDefaults/DevUI.ServiceDefaults.csproj" />
+  <Project Path="DevUI.BasicDemo/DevUI.BasicDemo.csproj" />
+</Solution>
